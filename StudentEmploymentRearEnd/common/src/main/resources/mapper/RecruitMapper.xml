@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.employment.mapper.RecruitMapper">
+    <!-- 添加招聘信息 -->
+    <insert id="addRecruit">
+        INSERT INTO tb_recruit (
+            id,
+            job_name,
+            job_address,
+            education,
+            min_salary,
+            max_salary,
+            job_experience,
+            create_user,
+            create_time,
+            update_user,
+            update_time,
+            content,
+            need_people,
+            is_pinned
+        )
+        VALUES (
+                   #{recruit.id},
+                   #{recruit.jobName},
+                   #{recruit.jobAddress},
+                   #{recruit.education},
+                   #{recruit.minSalary},
+                   #{recruit.maxSalary},
+                   #{recruit.jobExperience},
+                   #{recruit.createUser},
+                   #{recruit.createTime},
+                   #{recruit.updateUser},
+                   #{recruit.updateTime},
+                   #{recruit.content},
+                   #{recruit.needPeople},
+                   #{recruit.isPinned}
+               );
+    </insert>
+    <!--    修改招聘信息-->
+    <update id="updateRecruit">
+        UPDATE tb_recruit
+        <set>
+            <if test="recruit.jobName != null">
+                job_name = #{recruit.jobName},
+            </if>
+            <if test="recruit.jobAddress != null">
+                job_address = #{recruit.jobAddress},
+            </if>
+            <if test="recruit.education != null">
+                education = #{recruit.education},
+            </if>
+            <if test="recruit.minSalary != null">
+                min_salary = #{recruit.minSalary},
+            </if>
+            <if test="recruit.maxSalary != null">
+                max_salary = #{recruit.maxSalary},
+            </if>
+            <if test="recruit.jobExperience != null">
+                job_experience = #{recruit.jobExperience},
+            </if>
+            <if test="recruit.status != null">
+                `status` = #{recruit.status},
+            </if>
+            <if test="recruit.createUser != null">
+                create_user = #{recruit.createUser},
+            </if>
+            <if test="recruit.createTime != null">
+                create_time = #{recruit.createTime},
+            </if>
+            <if test="recruit.updateUser != null">
+                update_user = #{recruit.updateUser},
+            </if>
+            <if test="recruit.updateTime != null">
+                update_time = #{recruit.updateTime},
+            </if>
+            <if test="recruit.content != null">
+                content = #{recruit.content},
+            </if>
+            <if test="recruit.viewCount != null">
+                view_count = #{recruit.viewCount},
+            </if>
+            <if test="recruit.isDelete != null">
+                is_delete = #{recruit.isDelete},
+            </if>
+            <if test="recruit.needPeople != null">
+                need_people = #{recruit.needPeople},
+            </if>
+            <if test="recruit.isPinned != null">
+                is_pinned = #{recruit.isPinned}
+            </if>
+        </set>
+        where id = #{recruit.id}
+    </update>
+
+    <!--    招聘信息详情-->
+    <select id="getRecruitById" resultType="com.employment.pojo.entity.Recruit">
+        SELECT id,job_name,job_address,education,min_salary,max_salary,job_experience,`status`,create_time,create_user,update_time,update_user,content,view_count,`need_people`,is_pinned
+        FROM tb_recruit where id = #{id} AND is_delete = 0
+    </select>
+<!--    分页查询招聘信息-->
+    <select id="pageQuery" resultType="com.employment.pojo.vo.QueryRecruitVo">
+        SELECT id, job_name, job_address, education, min_salary, max_salary, job_experience, need_people,status,view_count,create_time,is_pinned
+        FROM tb_recruit
+        <where>
+            is_delete = 0
+            <if test="status != null">
+                AND `status` = #{status}
+            </if>
+            <if test="ids != null and ids.size() > 0">
+                AND id IN
+                <foreach item="id" collection="ids" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+        AND job_name LIKE CONCAT('%', #{condition}, '%')
+        ORDER BY is_pinned DESC, create_time DESC
+    </select>
+
+<!--    查询置顶的数量-->
+    <select id="getPinnedCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM tb_recruit WHERE is_pinned = 1
+    </select>
+</mapper>

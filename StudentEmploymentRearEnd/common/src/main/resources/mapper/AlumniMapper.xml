@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.employment.mapper.AlumniMapper">
+    <insert id="add">
+        insert into tb_alumni (id, name, current_position, current_company, location, salary, phone, graduation_date, class_advisor, last_update_time , is_delete)
+        values (#{alumni.id},
+                #{alumni.name},
+                #{alumni.currentPosition},
+                #{alumni.currentCompany},
+                #{alumni.location},
+                #{alumni.salary},
+                #{alumni.phone},
+                #{alumni.graduationDate},
+                #{alumni.classAdvisor},
+                #{alumni.lastUpdateTime},
+                #{alumni.isDelete}
+
+        )
+
+    </insert>
+
+    <select id="pageQueryAlumni" resultType="com.employment.pojo.vo.QueryAlumniVo">
+        SELECT id, name, current_position, current_company, location, salary, phone, graduation_date, class_advisor, last_update_time
+        FROM tb_alumni
+        <where>
+            <if test="name != null">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            AND is_delete = 0
+        </where>
+        ORDER BY graduation_date DESC
+    </select>
+    <select id="getAlumniByPhone" resultType="com.employment.pojo.entity.Alumni">
+        select id,name,current_position,current_company,location,salary,phone,graduation_date,class_advisor,last_update_time
+        FROM tb_alumni where
+        phone = #{phone} AND is_delete = 0
+    </select>
+    <select id="getAllAlumni" resultType="com.employment.pojo.vo.ExportAlumniVo">
+        select id,name,current_position,current_company,location,salary,phone,graduation_date,class_advisor,last_update_time
+        FROM tb_alumni where is_delete = 0
+    </select>
+    <select id="getAlumniById" resultType="com.employment.pojo.entity.Alumni">
+        select id,name,current_position,current_company,location,salary,phone,graduation_date,class_advisor,last_update_time
+        FROM tb_alumni where
+            id = #{id} AND is_delete = 0
+    </select>
+</mapper>

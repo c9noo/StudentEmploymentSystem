@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.employment.mapper.UserMapper">
+    <insert id="addUser">
+        INSERT INTO tb_user(id,`name`,username,`password`,avatar,phone,email,create_user,create_time,update_user,update_time)
+        value (
+            <if test="user.id != null">
+                #{user.id},
+            </if>
+            <if test="user.name != null">
+                #{user.name},
+            </if>
+            <if test="user.username != null">
+                #{user.username},
+            </if>
+            <if test="user.password != null">
+                #{user.password},
+            </if>
+            <if test="user.avatar != null">
+                #{user.avatar},
+            </if>
+            <if test="user.phone != null">
+                #{user.phone},
+            </if>
+            <if test="user.email != null">
+                #{user.email},
+            </if>
+            <if test="user.createUser != null">
+                #{user.createUser},
+            </if>
+            <if test="user.createTime != null">
+                #{user.createTime},
+            </if>
+            <if test="user.updateUser != null">
+                #{user.updateUser},
+            </if>
+            <if test="user.updateTime != null">
+                #{user.updateTime}
+            </if>
+            )
+    </insert>
+    <!--    修改用户信息-->
+    <update id="updateUserById">
+        UPDATE tb_user
+        <set>
+            <if test="user.name != null">
+                name = #{user.name},
+            </if>
+            <if test="user.password != null">
+                password = #{user.password},
+            </if>
+            <if test="user.avatar != null">
+                avatar = #{user.avatar},
+            </if>
+            <if test="user.phone != null">
+                phone = #{user.phone},
+            </if>
+            <if test="user.email != null">
+                email = #{user.email},
+            </if>
+            <if test="user.status != null">
+                `status` = #{user.status},
+            </if>
+            <if test="user.updateUser != null">
+                update_user = #{user.updateUser},
+            </if>
+            <if test="user.updateTime != null">
+                update_time = #{user.updateTime},
+            </if>
+            <if test="user.isDelete != null">
+                is_delete = #{user.isDelete}
+            </if>
+        </set>
+        where id = #{user.id}
+    </update>
+
+    <update id="updatePasswordByEmail">
+        UPDATE tb_user SET password = #{user.password} WHERE email = #{user.email}
+    </update>
+    <!--根据用户名查询用户信息-->
+    <select id="getUserByUsername" resultType="com.employment.pojo.entity.User">
+        select * from tb_user where username = #{username} and is_delete = 0
+    </select>
+
+<!--    根据用户id，查询用户信息-->
+    <select id="getUserById" resultType="com.employment.pojo.entity.User">
+        SELECT id,name,username,`password`,avatar,phone,email,`status`,create_time,create_user,update_time,update_user,is_delete
+            FROM tb_user
+        WHERE id = #{userId} AND is_delete = 0
+    </select>
+
+<!--    根据用户ids，获取对应的用户信息集合-->
+    <select id="getUserByIdsAndStatus" resultType="com.employment.pojo.vo.QueryUserVo">
+        SELECT id,avatar,name,username,`status`,password
+        FROM tb_user
+        <where>
+            <if test="name != null">
+                name LIKE CONCAT('%', #{name}, '%') AND
+            </if>
+            <if test="status != null">
+                `status` = #{status} AND
+            </if>
+            is_delete = 0
+            AND id IN
+            <foreach collection="ids" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+<!--    根据招聘id获取名字-->
+    <select id="getNameByRecruitId" resultType="java.lang.String">
+        SELECT u.`name`
+        FROM tb_user u
+                 JOIN tb_user_recruit ur ON u.id = ur.user_id
+        WHERE ur.recruit_id = #{recruitId} AND u.is_delete = 0
+    </select>
+<!--    根据更新的id 获取用户名-->
+    <select id="getNameById" resultType="java.lang.String">
+        select `name` from tb_user where id = #{updateId} AND is_delete = 0
+    </select>
+
+<!--    批量返回用户信息-->
+    <select id="getAllUserByIds" resultType="com.employment.pojo.vo.ExportUserVo">
+        SELECT `name`,username,phone,email,`status` FROM tb_user WHERE is_delete = 0 AND id IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+<!--    根据id查询对应的密码-->
+    <select id="getPasswordById" resultType="java.lang.String">
+        SELECT `password` FROM `tb_user` WHERE id = #{id} AND is_delete = 0
+    </select>
+
+<!--    查询用户名或是密码是否存在-->
+    <select id="getUserByNameOrUsername" resultType="com.employment.pojo.entity.User">
+        SELECT id,name,username,`password`,avatar,phone,email,`status`,create_time,create_user,update_time,update_user,is_delete
+        FROM tb_user WHERE
+        is_delete = 0
+        AND(
+            <if test="name != null">
+                `name` = #{name}
+            </if>
+            <if test="username != null">
+                OR username = #{username}
+            </if>
+        )
+    </select>
+
+<!--    根据邮箱获取用户-->
+    <select id="getUserByEmailOrPhone" resultType="com.employment.pojo.entity.User">
+        SELECT id,name,username,`password`,avatar,phone,email,`status`,create_time,create_user,update_time,update_user,is_delete
+        FROM tb_user WHERE
+            is_delete = 0
+        AND(
+            <if test="email != null">
+                email = #{email}
+            </if>
+            <if test="phone != null">
+                AND phone = #{phone}
+            </if>
+        )
+    </select>
+
+</mapper>

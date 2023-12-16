@@ -1,0 +1,77 @@
+server:
+  port: 8080
+
+spring:
+  jpa:
+    open-in-view: false   #关闭 OSIV
+  #main:
+#    allow-circular-references: true #允许循坏依赖  将PageHelp的版本升级为1.4.1可以解决 或是 降低Spring版本
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher   #  解决报错信息  knife4j documentationPluginsBootstrapper
+  profiles:
+    active: dev
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: ${student.datasource.driver-class-name}
+      url: jdbc:mysql://${student.datasource.host}:${student.datasource.port}/${student.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: ${student.datasource.username}
+      password: ${student.datasource.password}
+      # 在连接池中保持空闲连接的最大时间
+      max-evictable-idle-time-millis: 300000
+      # 在连接池中最小生存的时间
+      min-evictable-idle-time-millis: 300000
+      # 定期检查连接池中的连接是否过期的时间间隔
+      time-between-eviction-runs-millis: 60000
+
+  redis:
+    database: ${student.redis.database}
+    host: ${student.redis.host}
+    password: ${student.redis.password}
+    port: ${student.redis.port}
+
+
+    # 发送邮件配置
+  mail:
+    host: smtp.qq.com
+    username: 497513588@qq.com
+    password: qmkibrwffclpbgfi
+    default-encoding: UTF-8
+    smtp:
+      auth: true
+      ssl:
+        enable: true
+      starttls:
+        enable: true
+        required: true
+
+
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
+
+#打印日志
+logging:
+  level:
+    com.employment.mapper: debug
+
+student:
+  alioss:
+    endpoint: ${student.alioss.endpint}
+    access-key-id: ${student.alioss.access-key-id}
+    access-key-secret: ${student.alioss.access-key-secret}
+    bucket-name: ${student.alioss.bucket-name}
+  jwt:
+    time: 3600000 #过期时间，为毫秒
+    key: student #jwt密钥明文
+    word: cc #jwt签发者
+    jwtName: token #返回给前端的key
+  snowflake:
+    workerId: 1
+    dataCenterId: 1
+  user:
+    path: https://student-employment.oss-cn-hangzhou.aliyuncs.com/620794a8-cf1e-48a8-93e0-2865dfb60a1a.png
