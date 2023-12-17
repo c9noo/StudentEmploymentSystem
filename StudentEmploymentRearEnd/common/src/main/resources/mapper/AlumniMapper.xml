@@ -52,7 +52,7 @@
             where id = #{alumni.id}
     </update>
     <update id="removeAlumniById">
-        update tb_alumni set is_delete = 1 and id = #{id}
+        update tb_alumni set is_delete = 1 where id = #{id}
     </update>
 
     <select id="pageQueryAlumni" resultType="com.employment.pojo.vo.QueryAlumniVo">

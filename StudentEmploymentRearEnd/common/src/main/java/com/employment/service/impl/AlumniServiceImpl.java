@@ -168,12 +168,16 @@ public class AlumniServiceImpl implements AlumniService {
 
     /**
      * 删除校友信息
-     * @param id
+     * @param ids
      * @return
      */
     @Override
-    public ResponseResult removeAlumniById(Long id) {
-        alumniMapper.removeAlumniById(id);
+    public ResponseResult removeAlumniById(List<Long> ids) {
+        ids.stream()
+                .forEach(id ->{
+                    System.out.println(id);
+                    alumniMapper.removeAlumniById(id);
+                });
         return ResponseResult.okResult();
     }
 

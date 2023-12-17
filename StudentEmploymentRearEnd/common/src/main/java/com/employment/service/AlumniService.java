@@ -52,5 +52,5 @@ public interface AlumniService {
 
     ResponseResult updateAlumni(UpdateAlumniDto updateAlumniDto);
 
-    ResponseResult removeAlumniById(Long id);
+    ResponseResult removeAlumniById(List<Long> ids);
 }

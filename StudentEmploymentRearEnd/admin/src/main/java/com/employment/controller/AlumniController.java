@@ -154,10 +154,10 @@ public class AlumniController {
      * @return
      */
     @PreAuthorize("@Permission.hasPermission('"+AuthorityConstant.ALUMNI_REMOVE+"')")
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     @ApiOperation("删除校友信息")
     @CacheEvict(cacheNames = RedisConstant.REDIS_ALUMNI_PAGE, allEntries = true)
-    public ResponseResult removeAlumniById(@PathVariable Long id){
+    public ResponseResult removeAlumniById(@RequestParam List<Long> id){
         return alumniService.removeAlumniById(id);
     }
 
