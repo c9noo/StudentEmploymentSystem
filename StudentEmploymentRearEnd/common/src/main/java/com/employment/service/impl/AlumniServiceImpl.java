@@ -7,6 +7,7 @@ import com.employment.mapper.AlumniMapper;
 import com.employment.pojo.dto.AddAlumniDto;
 import com.employment.pojo.dto.ImportAlumniDto;
 import com.employment.pojo.dto.QueryAlumniDto;
+import com.employment.pojo.dto.UpdateAlumniDto;
 import com.employment.pojo.entity.Alumni;
 import com.employment.pojo.entity.User;
 import com.employment.pojo.vo.ExportAlumniVo;
@@ -145,6 +146,35 @@ public class AlumniServiceImpl implements AlumniService {
         Alumni alumni = alumniMapper.getAlumniById(id)
                 .orElseThrow(() -> new AppSystemException(AppHttpCodeEnum.DATA_IS_NULL));
         return BeanCopyUtil.copyBean(alumni,QueryAlumniDetailVo.class);
+    }
+
+    /**
+     * 跟新校友信息
+     * @param updateAlumniDto
+     * @return
+     */
+    @Override
+    public ResponseResult updateAlumni(UpdateAlumniDto updateAlumniDto) {
+
+        //拷贝成实体类
+        Alumni alumni = BeanCopyUtil.copyBean(updateAlumniDto, Alumni.class);
+        alumni.setLastUpdateTime(LocalDate.now());
+
+        //更新
+        alumniMapper.updateById(alumni);
+
+        return ResponseResult.okResult();
+    }
+
+    /**
+     * 删除校友信息
+     * @param id
+     * @return
+     */
+    @Override
+    public ResponseResult removeAlumniById(Long id) {
+        alumniMapper.removeAlumniById(id);
+        return ResponseResult.okResult();
     }
 
     /**

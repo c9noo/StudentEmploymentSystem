@@ -33,4 +33,8 @@ public interface AlumniMapper {
     List<ExportAlumniVo> getAllAlumni();
 
     Optional<Alumni> getAlumniById(@Param("id") Long id);
+
+    void updateById(@Param("alumni") Alumni alumni);
+
+    void removeAlumniById(@Param("id") Long id);
 }

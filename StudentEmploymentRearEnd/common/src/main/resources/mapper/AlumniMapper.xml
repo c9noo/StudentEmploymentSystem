@@ -16,10 +16,44 @@
                 #{alumni.classAdvisor},
                 #{alumni.lastUpdateTime},
                 #{alumni.isDelete}
-
         )
-
     </insert>
+    <update id="updateById">
+        update tb_alumni
+            <set>
+                <if test="alumni.name != null">
+                    name = #{alumni.name},
+                </if>
+                <if test="alumni.currentPosition != null">
+                    current_position = #{alumni.currentPosition},
+                </if>
+                <if test="alumni.currentCompany != null">
+                    current_company = #{alumni.currentCompany},
+                </if>
+                <if test="alumni.location != null">
+                    location = #{alumni.location},
+                </if>
+                <if test="alumni.salary != null">
+                    salary = #{alumni.salary},
+                </if>
+                <if test="alumni.phone != null">
+                    phone = #{alumni.phone},
+                </if>
+                <if test="alumni.graduationDate != null">
+                    graduation_date = #{alumni.graduationDate},
+                </if>
+                <if test="alumni.classAdvisor != null">
+                    class_advisor = #{alumni.classAdvisor},
+                </if>
+                <if test="alumni.lastUpdateTime != null">
+                    last_update_time = #{alumni.lastUpdateTime}
+                </if>
+            </set>
+            where id = #{alumni.id}
+    </update>
+    <update id="removeAlumniById">
+        update tb_alumni set is_delete = 1 and id = #{id}
+    </update>
 
     <select id="pageQueryAlumni" resultType="com.employment.pojo.vo.QueryAlumniVo">
         SELECT id, name, current_position, current_company, location, salary, phone, graduation_date, class_advisor, last_update_time

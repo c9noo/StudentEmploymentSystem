@@ -134,4 +134,31 @@ public class AlumniController {
         return ResponseResult.okResult(alumniService.getAlumniById(id));
     }
 
+
+    /**
+     * 修改校友信息
+     * @param update
+     * @return
+     */
+    @PreAuthorize("@Permission.hasPermission('"+AuthorityConstant.ALUMNI_EDIT+"')")
+    @PutMapping
+    @ApiOperation("修改校友信息")
+    @CacheEvict(cacheNames = RedisConstant.REDIS_ALUMNI_PAGE, allEntries = true)
+    public ResponseResult updateAlumni(@RequestBody @Validated UpdateAlumniDto update){
+        return alumniService.updateAlumni(update);
+    }
+
+    /**
+     * 删除校友信息
+     * @param id
+     * @return
+     */
+    @PreAuthorize("@Permission.hasPermission('"+AuthorityConstant.ALUMNI_REMOVE+"')")
+    @DeleteMapping("/{id}")
+    @ApiOperation("删除校友信息")
+    @CacheEvict(cacheNames = RedisConstant.REDIS_ALUMNI_PAGE, allEntries = true)
+    public ResponseResult removeAlumniById(@PathVariable Long id){
+        return alumniService.removeAlumniById(id);
+    }
+
 }

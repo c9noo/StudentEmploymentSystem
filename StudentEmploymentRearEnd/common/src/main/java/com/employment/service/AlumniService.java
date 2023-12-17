@@ -3,6 +3,7 @@ package com.employment.service;
 import com.employment.pojo.dto.AddAlumniDto;
 import com.employment.pojo.dto.ImportAlumniDto;
 import com.employment.pojo.dto.QueryAlumniDto;
+import com.employment.pojo.dto.UpdateAlumniDto;
 import com.employment.pojo.vo.ExportAlumniVo;
 import com.employment.pojo.vo.ExportUserVo;
 import com.employment.pojo.vo.QueryAlumniDetailVo;
@@ -48,4 +49,8 @@ public interface AlumniService {
      * @return
      */
     QueryAlumniDetailVo getAlumniById(Long id);
+
+    ResponseResult updateAlumni(UpdateAlumniDto updateAlumniDto);
+
+    ResponseResult removeAlumniById(Long id);
 }
