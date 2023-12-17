@@ -1,8 +1,0 @@
-.el-popper.is-light .el-popper__arrow::before{
-    
-    opacity: 0;
-}
-.el-dropdown__popper.el-popper{
-    border: none;
-    box-shadow: 0px 0px 10px black;
-}
