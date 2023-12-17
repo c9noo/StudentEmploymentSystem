@@ -5,7 +5,6 @@ import com.employment.constant.AuthorityConstant;
 import com.employment.constant.RedisConstant;
 import com.employment.pojo.dto.*;
 import com.employment.pojo.vo.ExportAlumniVo;
-import com.employment.pojo.vo.ExportUserVo;
 import com.employment.result.ResponseResult;
 import com.employment.service.AlumniService;
 import io.swagger.annotations.Api;

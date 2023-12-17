@@ -1,0 +1,32 @@
+server:
+  port: 8081
+
+spring:
+  jpa:
+    open-in-view: false   #关闭 OSIV
+  #main:
+  #    allow-circular-references: true #允许循坏依赖  将PageHelp的版本升级为1.4.1可以解决 或是 降低Spring版本
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher   #  解决报错信息  knife4j documentationPluginsBootstrapper
+  profiles:
+    active: dev
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: ${student.datasource.driver-class-name}
+      url: jdbc:mysql://${student.datasource.host}:${student.datasource.port}/${student.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: ${student.datasource.username}
+      password: ${student.datasource.password}
+      # 在连接池中保持空闲连接的最大时间
+      max-evictable-idle-time-millis: 300000
+      # 在连接池中最小生存的时间
+      min-evictable-idle-time-millis: 300000
+      # 定期检查连接池中的连接是否过期的时间间隔
+      time-between-eviction-runs-millis: 60000
+
+  redis:
+    database: ${student.redis.database}
+    host: ${student.redis.host}
+    password: ${student.redis.password}
+    port: ${student.redis.port}
