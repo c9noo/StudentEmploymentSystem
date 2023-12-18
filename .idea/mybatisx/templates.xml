@@ -5,7 +5,7 @@
       <TemplateContext>
         <option name="generateConfig">
           <GenerateConfig>
-            <option name="annotationType" value="MYBATIS_PLUS3" />
+            <option name="annotationType" value="NONE" />
             <option name="basePackage" value="com.employment" />
             <option name="basePath" value="src/main/java" />
             <option name="classNameStrategy" value="camel" />
@@ -48,8 +48,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="Classinformation" />
-                  <option name="tableName" value="tb_classinformation" />
+                  <option name="className" value="Student" />
+                  <option name="tableName" value="tb_student" />
                 </TableUIInfo>
               </list>
             </option>

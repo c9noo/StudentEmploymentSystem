@@ -143,7 +143,12 @@ public class AuthorityConstant {
     public static final String ALUMNI_EDIT = "system:alumni:edit";
 
     /**
-     * 学生管理列表
+     * 班级列表
      */
     public static final String CLASS_LIST = "system:class:list";
+
+    /**
+     * 班级查询
+     */
+    public static final String CLASS_QUERY = "system:class:query";
 }

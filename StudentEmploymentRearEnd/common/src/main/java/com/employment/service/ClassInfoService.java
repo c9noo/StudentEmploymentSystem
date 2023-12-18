@@ -1,6 +1,7 @@
 package com.employment.service;
 
 import com.employment.pojo.dto.QueryClassInfoDto;
+import com.employment.pojo.vo.QueryClassDetailVo;
 import com.employment.result.PageResult;
 
 /**
@@ -18,4 +19,11 @@ public interface ClassInfoService {
      * @return
      */
     PageResult pageQuery(QueryClassInfoDto queryClassInfoDto);
+
+    /**
+     * 获取班级详情
+     * @param id
+     * @return
+     */
+    QueryClassDetailVo getClassById(Long id);
 }

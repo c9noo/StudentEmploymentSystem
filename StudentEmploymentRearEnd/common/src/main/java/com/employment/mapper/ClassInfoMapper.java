@@ -1,6 +1,7 @@
 package com.employment.mapper;
 
 import com.employment.pojo.dto.QueryClassInfoDto;
+import com.employment.pojo.vo.QueryClassDetailVo;
 import com.employment.pojo.vo.QueryClassInfoVo;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
@@ -23,4 +24,6 @@ public interface ClassInfoMapper {
      * @return
      */
     Page<QueryClassInfoVo> pageQueryClassInfo(@Param("name") String name,@Param("adviser") String adviser,@Param("status") Integer status);
+
+    QueryClassDetailVo getClassInfoById(@Param("id") Long id);
 }

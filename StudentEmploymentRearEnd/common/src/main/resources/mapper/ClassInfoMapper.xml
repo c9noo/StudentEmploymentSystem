@@ -20,4 +20,7 @@
         </where>
         AND is_delete = 0
     </select>
+    <select id="getClassInfoById" resultType="com.employment.pojo.vo.QueryClassDetailVo">
+        SELECT id,`name`,adviser,`status`,graduation_date FROM tb_classinformation WHERE id = #{id} AND is_delete = 0
+    </select>
 </mapper>
