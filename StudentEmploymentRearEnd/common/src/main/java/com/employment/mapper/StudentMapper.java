@@ -22,4 +22,10 @@ public interface StudentMapper {
      * @return
      */
     List<ClassStudentVo> getStudentByClassId(@Param("id") Long id);
+
+    /**
+     * 修改班级绑定的学生对应的class_id
+     * @param id
+     */
+    void updateClassIdByStudentClassId(@Param("id") Long id);
 }

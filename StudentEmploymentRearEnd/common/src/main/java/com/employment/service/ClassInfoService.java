@@ -3,6 +3,7 @@ package com.employment.service;
 import com.employment.pojo.dto.QueryClassInfoDto;
 import com.employment.pojo.vo.QueryClassDetailVo;
 import com.employment.result.PageResult;
+import com.employment.result.ResponseResult;
 
 /**
  * @program: StudentEmploymentSystem
@@ -26,4 +27,11 @@ public interface ClassInfoService {
      * @return
      */
     QueryClassDetailVo getClassById(Long id);
+
+    /**
+     * 删除班级
+     * @param id
+     * @return
+     */
+    ResponseResult removeById(Long id);
 }

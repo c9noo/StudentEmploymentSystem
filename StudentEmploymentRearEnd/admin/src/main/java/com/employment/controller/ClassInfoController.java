@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @program: StudentEmploymentSystem
  * @ClassName ClassInfoController
@@ -48,6 +50,18 @@ public class ClassInfoController {
     @ApiOperation("获取班级详情")
     public ResponseResult getStudentById(@PathVariable Long id){
         return ResponseResult.okResult(classInfoService.getClassById(id));
+    }
+
+    /**
+     * 删除班级
+     * @param id
+     * @return
+     */
+    @PreAuthorize("@Permission.hasPermission('"+AuthorityConstant.CLASS_REMOVE+"')")
+    @DeleteMapping
+    @ApiOperation("删除班级信息")
+    public ResponseResult removeByIds(@RequestParam Long id){
+        return classInfoService.removeById(id);
     }
 
 }

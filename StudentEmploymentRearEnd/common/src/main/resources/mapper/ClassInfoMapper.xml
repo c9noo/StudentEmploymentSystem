@@ -3,7 +3,33 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.employment.mapper.ClassInfoMapper">
-<!--    分页查询班级信息-->
+    <!--    修改班级信息-->
+    <update id="updateById">
+        update tb_classinformation
+        <set>
+            <if test="classInformation.name != null">
+                name = #{classInformation.name},
+            </if>
+            <if test="classInformation.adviser != null">
+                adviser = #{classInformation.adviser},
+            </if>
+            <if test="classInformation.status != null">
+                status = #{classInformation.status},
+            </if>
+            <if test="classInformation.graduationDate">
+                graduation_data = #{classInformation.graduationDate},
+            </if>
+            <if test="classInformation.isDelete">
+                is_delete = #{classInformation.isDelete}
+            </if>
+        </set>
+        where id = #{classInformation.id}
+    </update>
+
+
+
+
+    <!--    分页查询班级信息-->
     <select id="pageQueryClassInfo" resultType="com.employment.pojo.vo.QueryClassInfoVo">
         SELECT id,`name`,adviser,`status`,graduation_date
         FROM tb_classinformation

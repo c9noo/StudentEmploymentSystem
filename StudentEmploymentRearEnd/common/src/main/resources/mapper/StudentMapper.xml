@@ -4,7 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.employment.mapper.StudentMapper">
 
-<!--    获取班级对应的学生信息-->
+<!--    修改班级对应的学生绑定的id-->
+    <update id="updateClassIdByStudentClassId">
+        UPDATE tb_student SET class_id = null WHERE class_id = #{id}
+    </update>
+
+    <!--    获取班级对应的学生信息-->
     <select id="getStudentByClassId" resultType="com.employment.pojo.vo.ClassStudentVo">
         SELECT id,`name`,sex,phone,email,`status`,avatar,speciality FROM tb_student WHERE class_id = #{id}
     </select>

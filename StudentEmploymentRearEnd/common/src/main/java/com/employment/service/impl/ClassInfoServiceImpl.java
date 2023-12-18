@@ -3,10 +3,12 @@ package com.employment.service.impl;
 import com.employment.mapper.ClassInfoMapper;
 import com.employment.mapper.StudentMapper;
 import com.employment.pojo.dto.QueryClassInfoDto;
+import com.employment.pojo.entity.ClassInformation;
 import com.employment.pojo.vo.ClassStudentVo;
 import com.employment.pojo.vo.QueryClassDetailVo;
 import com.employment.pojo.vo.QueryClassInfoVo;
 import com.employment.result.PageResult;
+import com.employment.result.ResponseResult;
 import com.employment.service.ClassInfoService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -74,5 +76,23 @@ public class ClassInfoServiceImpl implements ClassInfoService {
         queryClassDetailVo.setClassStudentVoList(classStudentVoList);
 
         return queryClassDetailVo;
+    }
+
+    @Override
+    @Transactional
+    public ResponseResult removeById(Long id) {
+
+        //将班级绑定的学生的classId 修改为null
+        studentMapper.updateClassIdByStudentClassId(id);
+
+        //拷贝成实体类
+        ClassInformation classInformation = new ClassInformation();
+        classInformation.setId(id);
+        classInformation.setIsDelete(1);
+
+        //删除班级
+        classInfoMapper.updateById(classInformation);
+
+        return ResponseResult.okResult();
     }
 }

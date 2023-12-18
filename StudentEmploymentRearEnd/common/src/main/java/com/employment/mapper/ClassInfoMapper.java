@@ -1,6 +1,6 @@
 package com.employment.mapper;
 
-import com.employment.pojo.dto.QueryClassInfoDto;
+import com.employment.pojo.entity.ClassInformation;
 import com.employment.pojo.vo.QueryClassDetailVo;
 import com.employment.pojo.vo.QueryClassInfoVo;
 import com.github.pagehelper.Page;
@@ -25,5 +25,16 @@ public interface ClassInfoMapper {
      */
     Page<QueryClassInfoVo> pageQueryClassInfo(@Param("name") String name,@Param("adviser") String adviser,@Param("status") Integer status);
 
+    /**
+     * 获取班级的详情信息
+     * @param id
+     * @return
+     */
     QueryClassDetailVo getClassInfoById(@Param("id") Long id);
+
+    /**
+     * 删除班级
+     * @param classInformation
+     */
+    void updateById(@Param("classInformation") ClassInformation classInformation);
 }

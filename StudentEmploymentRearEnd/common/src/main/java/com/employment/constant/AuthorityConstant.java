@@ -151,4 +151,9 @@ public class AuthorityConstant {
      * 班级查询
      */
     public static final String CLASS_QUERY = "system:class:query";
+
+    /**
+     * 删除班级
+     */
+    public static final String CLASS_REMOVE = "system:class:remove";
 }
