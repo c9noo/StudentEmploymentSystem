@@ -141,4 +141,9 @@ public class AuthorityConstant {
      * 编辑校友
      */
     public static final String ALUMNI_EDIT = "system:alumni:edit";
+
+    /**
+     * 学生管理列表
+     */
+    public static final String CLASS_LIST = "system:class:list";
 }

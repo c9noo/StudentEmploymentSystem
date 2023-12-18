@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.employment.mapper.ClassInfoMapper">
+<!--    分页查询班级信息-->
+    <select id="pageQueryClassInfo" resultType="com.employment.pojo.vo.QueryClassInfoVo">
+        SELECT id,`name`,adviser,`status`,graduation_date
+        FROM tb_classinformation
+        <where>
+            <if test="name != null">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="adviser != null">
+                AND adviser LIKE CONCAT('%', #{adviser},'%')
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
+        AND is_delete = 0
+    </select>
+</mapper>
