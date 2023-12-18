@@ -1,6 +1,7 @@
 package com.employment.controller;
 
 import com.employment.constant.AuthorityConstant;
+import com.employment.pojo.dto.AddClassDto;
 import com.employment.pojo.dto.QueryClassInfoDto;
 import com.employment.result.ResponseResult;
 import com.employment.service.ClassInfoService;
@@ -8,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,7 +38,7 @@ public class ClassInfoController {
     @PreAuthorize("@Permission.hasPermission('"+ AuthorityConstant.CLASS_LIST+"')")
     @GetMapping("/page")
     @ApiOperation("班级信息分页查询")
-    public ResponseResult Page(@ModelAttribute QueryClassInfoDto queryClassInfoDto){
+    public ResponseResult Page(@ModelAttribute @Validated QueryClassInfoDto queryClassInfoDto){
         return ResponseResult.okResult(classInfoService.pageQuery(queryClassInfoDto));
     }
 
@@ -62,6 +64,17 @@ public class ClassInfoController {
     @ApiOperation("删除班级信息")
     public ResponseResult removeByIds(@RequestParam Long id){
         return classInfoService.removeById(id);
+    }
+
+    /**
+     * 增加班级
+     * @return
+     */
+    @PreAuthorize("@Permission.hasPermission('"+AuthorityConstant.CLASS_ADD+"')")
+    @PostMapping
+    @ApiOperation("增加班级信息")
+    public ResponseResult addClassInfo(@RequestBody AddClassDto addClassDto){
+        return classInfoService.addClassInfo(addClassDto);
     }
 
 }

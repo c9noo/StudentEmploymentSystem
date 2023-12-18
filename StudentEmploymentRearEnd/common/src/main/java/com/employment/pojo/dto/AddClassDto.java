@@ -1,33 +1,22 @@
-package com.employment.pojo.vo;
+package com.employment.pojo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @program: StudentEmploymentSystem
- * @ClassName QueryClassDetailVo
+ * @ClassName AddClassDto
  * @author: c9noo
- * @create: 2023-12-18 14:33
+ * @create: 2023-12-18 15:43
  * @Version 1.0
  **/
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class QueryClassDetailVo {
-    /**
-     * 班级id
-     */
-    private Long id;
-
-    /**
-     * 班主任id
-     */
-    private Long userId;
-
+public class AddClassDto {
     /**
      * 班级名
      */
@@ -47,9 +36,4 @@ public class QueryClassDetailVo {
      * 毕业时间
      */
     private Date graduationDate;
-
-    /**
-     * 班级的学生
-     */
-    private List<ClassStudentVo> classStudentVoList;
 }

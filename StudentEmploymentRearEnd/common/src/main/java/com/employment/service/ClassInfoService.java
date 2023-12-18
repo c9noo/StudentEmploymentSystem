@@ -1,5 +1,6 @@
 package com.employment.service;
 
+import com.employment.pojo.dto.AddClassDto;
 import com.employment.pojo.dto.QueryClassInfoDto;
 import com.employment.pojo.vo.QueryClassDetailVo;
 import com.employment.result.PageResult;
@@ -34,4 +35,11 @@ public interface ClassInfoService {
      * @return
      */
     ResponseResult removeById(Long id);
+
+    /**
+     * 增加班级
+     * @param addClassDto
+     * @return
+     */
+    ResponseResult addClassInfo(AddClassDto addClassDto);
 }

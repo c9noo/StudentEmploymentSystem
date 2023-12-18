@@ -37,7 +37,9 @@ public enum AppHttpCodeEnum {
     EMAIL_TIME_NOT_OUT(514,"请在三分钟之后在重新获取" ),
     PINNED_ERROR(515,"置顶招聘只允许五个" ),
 
-    EMAIL_PHONE_ERROR(516, "邮箱号或是手机号重复");
+    EMAIL_PHONE_ERROR(516, "邮箱号或是手机号重复")
+
+    ;
 
 
     int code;

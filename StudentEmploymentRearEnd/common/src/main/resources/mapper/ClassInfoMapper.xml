@@ -26,10 +26,10 @@
         where id = #{classInformation.id}
     </update>
 
-
-
-
-    <!--    分页查询班级信息-->
+    <select id="getClassInfoById" resultType="com.employment.pojo.vo.QueryClassDetailVo">
+        SELECT id,`name`,adviser,`status`,graduation_date FROM tb_classinformation WHERE id = #{id} AND is_delete = 0
+    </select>
+<!--    分页查询班级信息-->
     <select id="pageQueryClassInfo" resultType="com.employment.pojo.vo.QueryClassInfoVo">
         SELECT id,`name`,adviser,`status`,graduation_date
         FROM tb_classinformation
@@ -43,10 +43,13 @@
             <if test="status != null">
                 AND status = #{status}
             </if>
+            <if test="id != null">
+                AND user_id = #{id}
+            </if>
         </where>
         AND is_delete = 0
     </select>
-    <select id="getClassInfoById" resultType="com.employment.pojo.vo.QueryClassDetailVo">
-        SELECT id,`name`,adviser,`status`,graduation_date FROM tb_classinformation WHERE id = #{id} AND is_delete = 0
+    <select id="getUserIdById" resultType="java.lang.Long">
+        select user_id from tb_classinformation where id = #{id}
     </select>
 </mapper>

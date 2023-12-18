@@ -156,4 +156,9 @@ public class AuthorityConstant {
      * 删除班级
      */
     public static final String CLASS_REMOVE = "system:class:remove";
+
+    /**
+     * 增加班级
+     */
+    public static final String CLASS_ADD = "system:class:add";
 }

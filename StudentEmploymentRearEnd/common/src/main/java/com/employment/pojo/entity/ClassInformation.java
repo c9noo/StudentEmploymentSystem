@@ -26,6 +26,11 @@ public class ClassInformation implements Serializable {
     private String name;
 
     /**
+     * 班主任id
+     */
+    private Long userId;
+
+    /**
      * 班主任姓名
      */
     private String adviser;

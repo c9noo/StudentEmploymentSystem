@@ -19,11 +19,10 @@ public interface ClassInfoMapper {
     /**
      * 分页查询班级
      * @param name
-     * @param adviser
      * @param status
      * @return
      */
-    Page<QueryClassInfoVo> pageQueryClassInfo(@Param("name") String name,@Param("adviser") String adviser,@Param("status") Integer status);
+    Page<QueryClassInfoVo> pageQueryClassInfo(@Param("name") String name,@Param("adviser") String adviser,@Param("status") Integer status,@Param("id") Long id);
 
     /**
      * 获取班级的详情信息
@@ -37,4 +36,11 @@ public interface ClassInfoMapper {
      * @param classInformation
      */
     void updateById(@Param("classInformation") ClassInformation classInformation);
+
+    /**
+     * 根据班级id，获取到user_id
+     * @param id
+     * @return
+     */
+    Long getUserIdById(@Param("id") Long id);
 }
