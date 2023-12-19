@@ -3,6 +3,7 @@ package com.employment.controller;
 import com.employment.constant.AuthorityConstant;
 import com.employment.constant.FileSuffixConstant;
 import com.employment.enums.AppHttpCodeEnum;
+import com.employment.exception.AppSystemException;
 import com.employment.pojo.dto.ImportAlumniDto;
 import com.employment.pojo.dto.ImportUserDto;
 import com.employment.pojo.dto.ResetPasswordUser;
@@ -30,8 +31,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -181,25 +184,50 @@ public class CommonController {
     @PostMapping("/importExcel")
     @ApiOperation("读取用户excel")
     public List<ImportUserDto> importExcel(@RequestParam("file") MultipartFile file) throws IOException {
-        // 获取资源的相对路径
-        Resource resource = new ClassPathResource("/");
-        String uploadDir = resource.getFile().getAbsolutePath();
-        //获取到文件名
-        String originalFilename = file.getOriginalFilename();
-        // 获取文件后缀，忽略大小写
-        String fileSuffix = Optional.ofNullable(originalFilename)
-                .filter(f -> f.contains("."))
-                .map(f -> f.substring(f.lastIndexOf('.') + 1))
-                .orElse("");
-        //校验
-        isValidFileExtension(fileSuffix);
-        // 重新拼接文件名
-        String newFilename =UUID.randomUUID().toString() + "." + fileSuffix;
-        Path filePath = Paths.get(uploadDir, newFilename);
-        //保存到本地
-        file.transferTo(filePath.toFile());
-        //读取 返回
-        return readExcel.readExcel(filePath.toString());
+        // 获取输入流
+        try (InputStream inputStream = file.getInputStream()) {
+            // 获取文件名
+            String originalFilename = file.getOriginalFilename();
+
+            // 获取文件后缀，忽略大小写
+            String fileSuffix = Optional.ofNullable(originalFilename)
+                    .filter(f -> f.contains("."))
+                    .map(f -> f.substring(f.lastIndexOf('.') + 1))
+                    .orElse("");
+
+            // 校验
+            isValidFileExtension(fileSuffix);
+
+            // 重新拼接文件名
+            String newFilename = UUID.randomUUID().toString() + "." + fileSuffix;
+
+            // 获取当前运行的目录
+            String currentDir = System.getProperty("user.dir");
+
+            // 拼接文件保存的绝对路径
+            String uploadDir = Paths.get(currentDir, "static", "upload").toString();
+            // 创建目录
+            File uploadDirFile = new File(uploadDir);
+            if (!uploadDirFile.exists()) {
+                boolean created = uploadDirFile.mkdirs();
+                if (!created) {
+                    throw new AppSystemException(AppHttpCodeEnum.SYSTEM_ERROR);
+                }
+            }
+            Path filePath = Paths.get(uploadDir, newFilename);
+
+            // 保存到本地
+            try (OutputStream outputStream = new FileOutputStream(filePath.toFile())) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+            }
+
+            // 读取返回
+            return readExcel.readExcel(filePath.toString());
+        }
     }
 
 
