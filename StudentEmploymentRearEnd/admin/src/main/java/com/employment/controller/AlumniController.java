@@ -53,7 +53,7 @@ public class AlumniController {
     @ApiOperation("校友信息分页查询")
     @Cacheable(cacheNames = RedisConstant.REDIS_ALUMNI_PAGE,
             key = "#queryAlumniDto.page + ':' + #queryAlumniDto.pageSize + ':' + #queryAlumniDto.name")
-    public ResponseResult Page(@ModelAttribute @Validated QueryAlumniDto queryAlumniDto){
+    public ResponseResult page(@ModelAttribute @Validated QueryAlumniDto queryAlumniDto){
         return ResponseResult.okResult(alumniService.pageQuery(queryAlumniDto));
     }
 

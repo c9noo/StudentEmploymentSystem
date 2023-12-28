@@ -49,7 +49,7 @@ public class TeacherController {
     private TeacherService teacherService;
 
     /**
-     * 分页查询老师列表
+     * 分页查询老师列表 TODO: 改进
      * @param queryTeacherDto
      * @return
      */
@@ -195,7 +195,14 @@ public class TeacherController {
     }
 
     /**
-     * TODO 获取老师的id和姓名
+     * TODO 获取老师信息(id，姓名，系部)
+     * @return
      */
+    @PreAuthorize("@Permission.hasPermission('"+AuthorityConstant.CLASS_ADD+"')")
+    @GetMapping("/getTeacherInfo")
+    @ApiOperation("获取老师姓名，id，系部信息")
+    public ResponseResult getTeacherNameAndId(){
+        return null;
+    }
 
 }

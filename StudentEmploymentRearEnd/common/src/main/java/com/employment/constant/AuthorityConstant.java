@@ -161,4 +161,9 @@ public class AuthorityConstant {
      * 增加班级
      */
     public static final String CLASS_ADD = "system:class:add";
+
+    /**
+     * 系部列表
+     */
+    public static final String DEPARTMENT_LIST = "system:department:list";
 }
