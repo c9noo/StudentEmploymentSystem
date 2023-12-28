@@ -3,6 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.employment.mapper.ClassInfoMapper">
+
+<!--    保存班级信息-->
+    <insert id="save">
+        INSERT INTO tb_classinformation(id,`name`,user_id,`status`,graduation_date,is_delete,adviser)
+            VALUES
+        (null,#{classInformation.name},#{classInformation.userId},#{classInformation.status},#{classInformation.graduationDate},#{classInformation.isDelete},#{classInformation.adviser})
+    </insert>
     <!--    修改班级信息-->
     <update id="updateById">
         update tb_classinformation

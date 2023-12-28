@@ -16,6 +16,7 @@ import com.employment.pojo.vo.QueryClassInfoVo;
 import com.employment.result.PageResult;
 import com.employment.result.ResponseResult;
 import com.employment.service.ClassInfoService;
+import com.employment.utils.BeanCopyUtil;
 import com.employment.utils.SecurityUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -46,7 +47,7 @@ public class ClassInfoServiceImpl implements ClassInfoService {
     private UserRoleMapper userRoleMapper;
 
     /**
-     * 分页查询学生信息
+     * 分页查询班级信息
      * @param queryClassInfoDto
      * @return
      */
@@ -143,9 +144,22 @@ public class ClassInfoServiceImpl implements ClassInfoService {
         return ResponseResult.okResult();
     }
 
+    /**
+     * 增加班级信息
+     * @param addClassDto
+     * @return
+     */
     @Override
     public ResponseResult addClassInfo(AddClassDto addClassDto) {
-        return null;
+        // 拷贝成实体类对象
+        ClassInformation classInformation = BeanCopyUtil.copyBean(addClassDto, ClassInformation.class);
+
+        //设置状态为0
+        classInformation.setIsDelete(0);
+
+        // 保存
+        classInfoMapper.save(classInformation);
+        return ResponseResult.okResult();
     }
 
     /**

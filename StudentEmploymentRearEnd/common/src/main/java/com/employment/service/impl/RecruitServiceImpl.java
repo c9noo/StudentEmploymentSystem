@@ -156,7 +156,7 @@ public class RecruitServiceImpl implements RecruitService {
     }
 
     /**
-     * 根据id删除招聘信息  TODO 改进
+     * 根据id删除招聘信息
      * @param ids
      * @return
      */

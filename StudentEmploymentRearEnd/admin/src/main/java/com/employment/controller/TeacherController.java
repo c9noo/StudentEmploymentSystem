@@ -195,7 +195,7 @@ public class TeacherController {
     }
 
     /**
-     * TODO 单独删除老师
+     * TODO 获取老师的id和姓名
      */
 
 }

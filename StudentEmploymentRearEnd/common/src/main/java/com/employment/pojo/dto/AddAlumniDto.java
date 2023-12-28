@@ -1,9 +1,11 @@
 package com.employment.pojo.dto;
 
+import com.employment.constant.ParamErrorConstant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -23,21 +25,25 @@ public class AddAlumniDto {
     /**
      * 姓名
      */
+    @NotBlank(message = ParamErrorConstant.PARAM_IS_NULL)
     private String name;
 
     /**
      * 当前职位
      */
+    @NotBlank(message = ParamErrorConstant.PARAM_IS_NULL)
     private String currentPosition;
 
     /**
      * 在职公司
      */
+    @NotBlank(message = ParamErrorConstant.PARAM_IS_NULL)
     private String currentCompany;
 
     /**
      * 地点
      */
+    @NotBlank(message = ParamErrorConstant.PARAM_IS_NULL)
     private String location;
 
     /**
@@ -48,6 +54,7 @@ public class AddAlumniDto {
     /**
      * 联系方式
      */
+    @NotBlank(message = ParamErrorConstant.PARAM_IS_NULL)
     private String phone;
 
     /**
@@ -58,6 +65,7 @@ public class AddAlumniDto {
     /**
      * 班主任
      */
+    @NotBlank(message = ParamErrorConstant.PARAM_IS_NULL)
     private String classAdvisor;
 
 }

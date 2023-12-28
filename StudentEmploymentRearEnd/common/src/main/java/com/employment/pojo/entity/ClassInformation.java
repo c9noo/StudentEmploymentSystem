@@ -1,6 +1,7 @@
 package com.employment.pojo.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 import lombok.*;
@@ -43,7 +44,7 @@ public class ClassInformation implements Serializable {
     /**
      * 毕业时间
      */
-    private Date graduationDate;
+    private LocalDate graduationDate;
 
     /**
      * 逻辑删除（0未删除）

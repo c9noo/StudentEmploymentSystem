@@ -31,7 +31,7 @@ public class ClassInfoController {
 
 
     /**
-     * 分页查询学生信息
+     * 分页查询班级信息
      * @param queryClassInfoDto
      * @return
      */

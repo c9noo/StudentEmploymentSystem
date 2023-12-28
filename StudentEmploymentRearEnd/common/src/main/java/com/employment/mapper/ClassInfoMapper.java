@@ -43,4 +43,10 @@ public interface ClassInfoMapper {
      * @return
      */
     Long getUserIdById(@Param("id") Long id);
+
+    /**
+     * 保存班级信息
+     * @param classInformation
+     */
+    void save(@Param("classInformation") ClassInformation classInformation);
 }
