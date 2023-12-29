@@ -68,4 +68,10 @@
     <select id="getUserIdById" resultType="java.lang.Long">
         select user_id from tb_classinformation where id = #{id}
     </select>
+
+<!--    查询班级id 和毕业时间 和状态-->
+    <select id="selectIdAndTime" resultType="com.employment.pojo.dto.ClassIdAndTime">
+        SELECT id,`status`,graduation_date FROM tb_classinformation WHERE `status` = #{status}
+    </select>
+
 </mapper>

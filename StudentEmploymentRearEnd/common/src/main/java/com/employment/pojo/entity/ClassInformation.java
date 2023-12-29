@@ -15,6 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
+@Builder
 public class ClassInformation implements Serializable {
     /**
      * id

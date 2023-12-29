@@ -1,11 +1,14 @@
 package com.employment.mapper;
 
+import com.employment.pojo.dto.ClassIdAndTime;
 import com.employment.pojo.entity.ClassInformation;
 import com.employment.pojo.vo.QueryClassDetailVo;
 import com.employment.pojo.vo.QueryClassInfoVo;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author 49751
@@ -51,4 +54,11 @@ public interface ClassInfoMapper {
      * @param classInformation
      */
     void save(@Param("classInformation") ClassInformation classInformation);
+
+
+    /**
+     * 查询班级id 和毕业时间 和状态
+     * @return
+     */
+    List<ClassIdAndTime> selectIdAndTime(@Param("status") Integer status);
 }

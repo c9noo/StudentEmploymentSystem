@@ -176,6 +176,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     /**
+     * TODO 在删除老师的时候，系部和老师的关联表是否要删除？ 待解决
      * 删除老师信息
      * @param ids
      * @return
