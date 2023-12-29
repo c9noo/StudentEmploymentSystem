@@ -3,6 +3,7 @@ package com.employment.mapper;
 import com.employment.annotation.AutoFill;
 import com.employment.enums.OperationTypeEnum;
 import com.employment.pojo.entity.User;
+import com.employment.pojo.vo.ClassTeachVo;
 import com.employment.pojo.vo.ExportUserVo;
 import com.employment.pojo.vo.QueryUserVo;
 import com.github.pagehelper.Page;
@@ -48,9 +49,10 @@ public interface UserMapper {
      * @param ids
      * @param status
      * @param name
+     * @param departmentId
      * @return
      */
-    Page<QueryUserVo> getUserByIdsAndStatus(@Param("ids") List<Long> ids, @Param("status") Integer status,@Param("name") String name);
+    Page<QueryUserVo> getUserByIdsAndStatus(@Param("ids") List<Long> ids, @Param("status") Integer status, @Param("name") String name,@Param("departmentId") Long departmentId);
 
     /**
      * 根据招聘id 获取名字
@@ -108,4 +110,11 @@ public interface UserMapper {
      * @param user
      */
     void updatePasswordByEmail(@Param("user") User user);
+
+    /**
+     * 查询老师的姓名和id
+     * @param userId
+     * @return
+     */
+    List<ClassTeachVo> selectUserNameAndId(@Param("userId") Long userId);
 }

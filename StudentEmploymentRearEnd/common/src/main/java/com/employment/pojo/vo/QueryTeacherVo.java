@@ -82,5 +82,10 @@ public class QueryTeacherVo implements Serializable {
      */
     private String updateUsername;
 
+    /**
+     * 所属系部
+     */
+    private String departmentName;
+
     private static final long serialVersionUID = -8529025738763411213L;
 }

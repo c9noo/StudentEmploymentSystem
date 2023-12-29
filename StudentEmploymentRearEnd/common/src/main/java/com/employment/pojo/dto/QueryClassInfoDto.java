@@ -41,4 +41,9 @@ public class QueryClassInfoDto {
      */
     private Integer status;
 
+    /**
+     * 所属系部id
+     */
+    private Long descriptionId;
+
 }

@@ -18,11 +18,13 @@ public interface ClassInfoMapper {
 
     /**
      * 分页查询班级
+     *
      * @param name
      * @param status
+     * @param descriptionId
      * @return
      */
-    Page<QueryClassInfoVo> pageQueryClassInfo(@Param("name") String name,@Param("adviser") String adviser,@Param("status") Integer status,@Param("id") Long id);
+    Page<QueryClassInfoVo> pageQueryClassInfo(@Param("name") String name, @Param("adviser") String adviser, @Param("status") Integer status, @Param("id") Long id, @Param("descriptionId") Long descriptionId);
 
     /**
      * 获取班级的详情信息

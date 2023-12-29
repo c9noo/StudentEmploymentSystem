@@ -30,8 +30,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -84,7 +82,7 @@ public class CompanyServiceImpl implements CompanyService {
         PageHelper.startPage(queryCompanyDto.getPage(),queryCompanyDto.getPageSize());
 
         //查询出对应的信息
-        Page<QueryUserVo> pagevo =  userMapper.getUserByIdsAndStatus(ids,queryCompanyDto.getStatus(),nameOptional.orElseGet(() -> null));
+        Page<QueryUserVo> pagevo =  userMapper.getUserByIdsAndStatus(ids,queryCompanyDto.getStatus(),nameOptional.orElseGet(() -> null), null);
 
         return new PageResult((int)pagevo.getTotal(), pagevo.getResult());
     }

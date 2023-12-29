@@ -28,6 +28,7 @@ public class QueryTeacherDto {
     @NotNull(message = FieldErrorConstant.RECRUIT_STATUS_ERROR)
     private Integer pageSize;
     private String name;
+    private Long departmentId;
     @NotNull
     @Max(value = PageConstant.MAX,message = FieldErrorConstant.RECRUIT_STATUS_ERROR) //设置参数的最大值
     @Min(value = PageConstant.MIN,message = FieldErrorConstant.RECRUIT_STATUS_ERROR)  //设置参数的最小值

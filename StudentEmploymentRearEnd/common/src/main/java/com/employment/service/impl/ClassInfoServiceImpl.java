@@ -3,19 +3,19 @@ package com.employment.service.impl;
 import com.employment.constant.RoleKeyConstant;
 import com.employment.enums.AppHttpCodeEnum;
 import com.employment.exception.AppSystemException;
-import com.employment.mapper.ClassInfoMapper;
-import com.employment.mapper.StudentMapper;
-import com.employment.mapper.UserRoleMapper;
+import com.employment.mapper.*;
 import com.employment.pojo.dto.AddClassDto;
 import com.employment.pojo.dto.QueryClassInfoDto;
 import com.employment.pojo.dto.UserContextDto;
 import com.employment.pojo.entity.ClassInformation;
 import com.employment.pojo.vo.ClassStudentVo;
+import com.employment.pojo.vo.ClassTeachVo;
 import com.employment.pojo.vo.QueryClassDetailVo;
 import com.employment.pojo.vo.QueryClassInfoVo;
 import com.employment.result.PageResult;
 import com.employment.result.ResponseResult;
 import com.employment.service.ClassInfoService;
+import com.employment.service.DepartmentService;
 import com.employment.utils.BeanCopyUtil;
 import com.employment.utils.SecurityUtil;
 import com.github.pagehelper.Page;
@@ -46,6 +46,17 @@ public class ClassInfoServiceImpl implements ClassInfoService {
     @Autowired
     private UserRoleMapper userRoleMapper;
 
+    @Autowired
+    private DepartmentMapper departmentMapper;
+
+    @Autowired
+    private ClassDeparrmentMapper classDeparrmentMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
+
+
     /**
      * 分页查询班级信息
      * @param queryClassInfoDto
@@ -74,7 +85,9 @@ public class ClassInfoServiceImpl implements ClassInfoService {
                 nameOptional.orElse(null),
                 adviser.orElse(null),
                 queryClassInfoDto.getStatus(),
-                userContext.getUserId());
+                userContext.getUserId(),
+                queryClassInfoDto.getDescriptionId()
+                );
 
         return new PageResult((int)page.getTotal(),page.getResult());
     }
@@ -101,6 +114,9 @@ public class ClassInfoServiceImpl implements ClassInfoService {
                 throw new AppSystemException(AppHttpCodeEnum.POWER_ERROR);
             }
         }
+
+        //查询班级所属的系部
+        queryClassDetailVo.setDepartmentName(departmentMapper.getDepartmentNameByClassId(id));
 
         //查询出班级的学生信息
         List<ClassStudentVo> classStudentVoList = studentMapper.getStudentByClassId(id);
@@ -133,6 +149,9 @@ public class ClassInfoServiceImpl implements ClassInfoService {
         //将班级绑定的学生的classId 修改为null
         studentMapper.updateClassIdByStudentClassId(id);
 
+        //将班级和系部的绑定关系清除
+        classDeparrmentMapper.removeCLassAndDepartment(id);
+
         //拷贝成实体类
         ClassInformation classInformation = new ClassInformation();
         classInformation.setId(id);
@@ -159,7 +178,24 @@ public class ClassInfoServiceImpl implements ClassInfoService {
 
         // 保存
         classInfoMapper.save(classInformation);
+        classDeparrmentMapper.save(classInformation.getId(),addClassDto.getDepartmentId());
         return ResponseResult.okResult();
+    }
+
+    /**
+     * 获取老师的姓名和id
+     * @return
+     */
+    @Override
+    public ResponseResult getTeacherInfoAndId() {
+        UserContextDto userContext = getUserContext();
+        //如果是管理员，那么就把id设置为null
+        if(isAdmin(userContext.getRoleKeyByUserId())){
+            userContext.setUserId(null);
+        }
+        //如果不是 就只查询自己
+        List<ClassTeachVo> list = userMapper.selectUserNameAndId(userContext.getUserId());
+        return ResponseResult.okResult(list);
     }
 
     /**

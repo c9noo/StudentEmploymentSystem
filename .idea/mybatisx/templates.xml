@@ -48,8 +48,8 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="UserDepartment" />
-                  <option name="tableName" value="tb_user_department" />
+                  <option name="className" value="ClassDeparrment" />
+                  <option name="tableName" value="tb_class_deparrment" />
                 </TableUIInfo>
               </list>
             </option>

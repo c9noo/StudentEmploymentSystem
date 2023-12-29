@@ -49,6 +49,11 @@ public class QueryClassDetailVo {
     private Date graduationDate;
 
     /**
+     * 所属系部名称
+     */
+    private String departmentName;
+
+    /**
      * 班级的学生
      */
     private List<ClassStudentVo> classStudentVoList;

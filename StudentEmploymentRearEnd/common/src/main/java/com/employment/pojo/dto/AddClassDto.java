@@ -47,4 +47,9 @@ public class AddClassDto {
      * 毕业时间
      */
     private LocalDate graduationDate;
+
+    /**
+     * 所属系部id
+     */
+    private Long departmentId;
 }

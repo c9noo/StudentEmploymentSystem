@@ -5,7 +5,7 @@
 <mapper namespace="com.employment.mapper.ClassInfoMapper">
 
 <!--    保存班级信息-->
-    <insert id="save">
+    <insert id="save" keyProperty="classInformation.id" useGeneratedKeys="true" parameterType="com.employment.pojo.entity.ClassInformation">
         INSERT INTO tb_classinformation(id,`name`,user_id,`status`,graduation_date,is_delete,adviser)
             VALUES
         (null,#{classInformation.name},#{classInformation.userId},#{classInformation.status},#{classInformation.graduationDate},#{classInformation.isDelete},#{classInformation.adviser})
@@ -38,8 +38,10 @@
     </select>
 <!--    分页查询班级信息-->
     <select id="pageQueryClassInfo" resultType="com.employment.pojo.vo.QueryClassInfoVo">
-        SELECT id,`name`,adviser,`status`,graduation_date
-        FROM tb_classinformation
+        SELECT cl.id,cl.`name`,cl.adviser,cl.`status`,cl.graduation_date
+            FROM tb_class_deparrment cd
+        LEFT JOIN (
+            SELECT id,`name`,adviser,`status`,graduation_date FROM tb_classinformation
         <where>
             <if test="name != null">
                 AND name LIKE CONCAT('%', #{name}, '%')
@@ -55,6 +57,13 @@
             </if>
         </where>
         AND is_delete = 0
+        ) cl
+        ON cd.class_id = cl.id
+        <where>
+            <if test="descriptionId != null">
+                cd.department_id = #{descriptionId}
+            </if>
+        </where>
     </select>
     <select id="getUserIdById" resultType="java.lang.Long">
         select user_id from tb_classinformation where id = #{id}

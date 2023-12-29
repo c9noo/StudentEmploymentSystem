@@ -16,7 +16,7 @@ import com.employment.result.ResponseResult;
 public interface ClassInfoService {
 
     /**
-     * 分页查询学生信息
+     * 分页查询班级信息
      * @param queryClassInfoDto
      * @return
      */
@@ -42,4 +42,10 @@ public interface ClassInfoService {
      * @return
      */
     ResponseResult addClassInfo(AddClassDto addClassDto);
+
+    /**
+     * 获取老师id和姓名
+     * @return
+     */
+    ResponseResult getTeacherInfoAndId();
 }

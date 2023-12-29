@@ -49,7 +49,7 @@ public class TeacherController {
     private TeacherService teacherService;
 
     /**
-     * 分页查询老师列表 TODO: 改进
+     * 分页查询老师列表
      * @param queryTeacherDto
      * @return
      */
@@ -57,8 +57,8 @@ public class TeacherController {
     @GetMapping("/page")
     @ApiOperation("招聘信息分页查询")
     @Cacheable(cacheNames = RedisConstant.REDIS_TEACHER_PAGE,
-            key = "#queryTeacherDto.page + ':' + #queryTeacherDto.pageSize + ':' + #queryTeacherDto.name + ':' + #queryTeacherDto.status")
-    public ResponseResult Page(@ModelAttribute @Validated QueryTeacherDto queryTeacherDto){
+            key = "#queryTeacherDto.page + ':' + #queryTeacherDto.pageSize + #queryTeacherDto.departmentId +':' + #queryTeacherDto.name + ':' + #queryTeacherDto.status")
+    public ResponseResult page(@ModelAttribute @Validated QueryTeacherDto queryTeacherDto){
         return ResponseResult.okResult(teacherService.pageQuery(queryTeacherDto));
     }
 
@@ -192,17 +192,6 @@ public class TeacherController {
     @Cacheable(cacheNames = RedisConstant.REDIS_TEACHER_DETAIL,key = "#id")
     public ResponseResult getTeacherById(@PathVariable Long id){
         return ResponseResult.okResult(teacherService.getTeacherById(id));
-    }
-
-    /**
-     * TODO 获取老师信息(id，姓名，系部)
-     * @return
-     */
-    @PreAuthorize("@Permission.hasPermission('"+AuthorityConstant.CLASS_ADD+"')")
-    @GetMapping("/getTeacherInfo")
-    @ApiOperation("获取老师姓名，id，系部信息")
-    public ResponseResult getTeacherNameAndId(){
-        return null;
     }
 
 }

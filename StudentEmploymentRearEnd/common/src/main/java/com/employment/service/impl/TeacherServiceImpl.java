@@ -3,10 +3,7 @@ package com.employment.service.impl;
 import com.employment.constant.RoleKeyConstant;
 import com.employment.enums.AppHttpCodeEnum;
 import com.employment.exception.AppSystemException;
-import com.employment.mapper.RecruitMapper;
-import com.employment.mapper.UserMapper;
-import com.employment.mapper.UserRecruitMapper;
-import com.employment.mapper.UserRoleMapper;
+import com.employment.mapper.*;
 import com.employment.pojo.dto.AddUserDto;
 import com.employment.pojo.dto.ImportUserDto;
 import com.employment.pojo.dto.QueryTeacherDto;
@@ -19,6 +16,7 @@ import com.employment.pojo.vo.QueryTeacherVo;
 import com.employment.pojo.vo.QueryUserVo;
 import com.employment.result.PageResult;
 import com.employment.result.ResponseResult;
+import com.employment.service.DepartmentService;
 import com.employment.service.TeacherService;
 import com.employment.utils.BeanCopyUtil;
 import com.employment.utils.SnowflakeIdUtils;
@@ -64,6 +62,9 @@ public class TeacherServiceImpl implements TeacherService {
     @Autowired
     private RecruitMapper recruitMapper;
 
+    @Autowired
+    private DepartmentMapper departmentMapper;
+
     @Value("${student.user.path}")
     public String userAvatarPath;
 
@@ -76,7 +77,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Transactional
     public PageResult pageQuery(QueryTeacherDto queryTeacherDto) {
 
-        //先查询出是老师的id
+        //先查询出是老师的id,并且满足系部要求
         List<Long> ids = userRoleMapper.getIdsByRoleKey(RoleKeyConstant.TEACHER);
 
         //对过滤条件进行过滤
@@ -87,9 +88,9 @@ public class TeacherServiceImpl implements TeacherService {
         PageHelper.startPage(queryTeacherDto.getPage(),queryTeacherDto.getPageSize());
 
         //查询出对应的信息
-        Page<QueryUserVo> pagevo =  userMapper.getUserByIdsAndStatus(ids,queryTeacherDto.getStatus(),nameOptional.orElseGet(() -> null));
+        Page<QueryUserVo> pageVo =  userMapper.getUserByIdsAndStatus(ids,queryTeacherDto.getStatus(),nameOptional.orElseGet(() -> null),queryTeacherDto.getDepartmentId());
 
-        return new PageResult((int)pagevo.getTotal(), pagevo.getResult());
+        return new PageResult((int)pageVo.getTotal(), pageVo.getResult());
     }
 
     /**
@@ -246,6 +247,9 @@ public class TeacherServiceImpl implements TeacherService {
         Long updateUserId = actualUser.getId();
         String name = userMapper.getNameById(updateUserId);
         queryTeacherVo.setUpdateUsername(name);
+
+        //查询出对应的系部，进行赋值
+        queryTeacherVo.setDepartmentName(departmentMapper.getDepartmentNameByUserId(id));
 
         return queryTeacherVo;
     }

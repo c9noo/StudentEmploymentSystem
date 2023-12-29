@@ -38,7 +38,7 @@ public class ClassInfoController {
     @PreAuthorize("@Permission.hasPermission('"+ AuthorityConstant.CLASS_LIST+"')")
     @GetMapping("/page")
     @ApiOperation("班级信息分页查询")
-    public ResponseResult Page(@ModelAttribute @Validated QueryClassInfoDto queryClassInfoDto){
+    public ResponseResult page(@ModelAttribute @Validated QueryClassInfoDto queryClassInfoDto){
         return ResponseResult.okResult(classInfoService.pageQuery(queryClassInfoDto));
     }
 
@@ -75,6 +75,17 @@ public class ClassInfoController {
     @ApiOperation("增加班级信息")
     public ResponseResult addClassInfo(@RequestBody AddClassDto addClassDto){
         return classInfoService.addClassInfo(addClassDto);
+    }
+
+    /**
+     * 获取老师信息
+     * @return
+     */
+    @PreAuthorize("@Permission.hasPermission('"+AuthorityConstant.CLASS_ADD+"')")
+    @GetMapping("/getTeacherInfo")
+    @ApiOperation("获取老师信息")
+    public ResponseResult getTeacherInfoAndId(){
+       return classInfoService.getTeacherInfoAndId();
     }
 
 }

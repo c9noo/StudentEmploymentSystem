@@ -93,23 +93,28 @@
 
 <!--    根据用户ids，获取对应的用户信息集合-->
     <select id="getUserByIdsAndStatus" resultType="com.employment.pojo.vo.QueryUserVo">
-        SELECT id,avatar,name,username,`status`,password
-        FROM tb_user
+        SELECT u.id, u.avatar, u.name, u.username, u.`status`, u.password
+        FROM tb_user u
+        JOIN tb_user_department ud ON u.id = ud.user_id
         <where>
             <if test="name != null">
-                name LIKE CONCAT('%', #{name}, '%') AND
+                u.name LIKE CONCAT('%', #{name}, '%') AND
             </if>
             <if test="status != null">
-                `status` = #{status} AND
+                u.`status` = #{status} AND
             </if>
-            is_delete = 0
-            AND id IN
+            <if test="departmentId != null">
+                ud.department_id = #{departmentId} AND
+            </if>
+            u.is_delete = 0 AND
+            u.id IN
             <foreach collection="ids" item="id" open="(" separator="," close=")">
                 #{id}
             </foreach>
         </where>
-        ORDER BY create_time DESC
+        ORDER BY u.create_time DESC
     </select>
+
 <!--    根据招聘id获取名字-->
     <select id="getNameByRecruitId" resultType="java.lang.String">
         SELECT u.`name`
@@ -163,6 +168,15 @@
                 AND phone = #{phone}
             </if>
         )
+    </select>
+<!--    查询老师姓名和id-->
+    <select id="selectUserNameAndId" resultType="com.employment.pojo.vo.ClassTeachVo">
+        SELECT u.id,u.`name` FROM tb_user u INNER JOIN (SELECT user_id FROM tb_user_role WHERE role_id = 18) ur ON ur.user_id = u.id
+        <where>
+            <if test="userId != null">
+                AND u.id = #{userId}
+            </if>
+        </where>
     </select>
 
 </mapper>
